@@ -955,7 +955,7 @@ class RadarParser(Parser):
         if gain is not None:
             raw *= gain
             if offset is not None:
-                raw += offset + gain
+                raw += offset * gain
         if self.PRECISION is not None:
             raw = raw.round(self.PRECISION)
         return self.serialize(raw)
