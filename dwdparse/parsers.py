@@ -954,8 +954,11 @@ class RadarParser(Parser):
             raw[raw == nodata] = np.nan
         if gain is not None:
             raw *= gain
-            if offset is not None:
-                raw += offset * gain
+            if offset:
+                # XXX: Unsure why/if we need this "+ gain", but it seems to fix
+                #      the WN (reflectivity) data while also still properly
+                #      parsing the RV etc. (precipitation) data
+                raw += offset + gain
         if self.PRECISION is not None:
             raw = raw.round(self.PRECISION)
         return self.serialize(raw)
